@@ -23,7 +23,7 @@ function flatten(data, numericPropertyPrefix, flattenArrays) {
             result[prop] = cur;
         } else if (isArray) {
             for (var i = 0, l = cur.length; i < l; i++) {
-                recurse(cur[i], prop ? prop + "." + i : "" + i);
+                recurse(cur[i], prop ? prop + '.' + i : '' + i);
             }
             if (l == 0) {
                 result[prop] = [];
@@ -33,7 +33,7 @@ function flatten(data, numericPropertyPrefix, flattenArrays) {
             for (var p in cur) {
                 isEmpty = false;
                 k = ((typeof p === 'string' && !isNaN(parseInt(p))) ? numericPropertyPrefix + p : p);
-                recurse(cur[p], prop ? prop + "." + k : k);
+                recurse(cur[p], prop ? prop + '.' + k : k);
             }
             if (isEmpty) {
                 result[prop] = {};
@@ -41,7 +41,7 @@ function flatten(data, numericPropertyPrefix, flattenArrays) {
         }
     }
 
-    recurse(data, "");
+    recurse(data, '');
     return result;
 }
 
@@ -55,13 +55,15 @@ function flatten(data, numericPropertyPrefix, flattenArrays) {
  * You can supply a set of separators and they will be used in turn.
  *
  * @param {object|array} data
- * @param {string|null} numericPropertyPrefix Any object property keys prefixed with this value will be treated as a string/property and not an array index.
+ * @param {string|null} numericPropertyPrefix Any object property keys prefixed with this value will be treated as a
+ *     string/property and not an array index.
  * @param {string[]|null} separators
  * @param {string|null} defaultSeparator
- * @param {boolean} forceObject All numeric keys will be treated as a string to force the result to be a nested object, not a nested array.
+ * @param {boolean} forceObject All numeric keys will be treated as a string to force the result to be a nested object,
+ *     not a nested array.
  * @returns {*}
  */
-function unflatten(data, numericPropertyPrefix , separators, defaultSeparator, forceObject) {
+function unflatten(data, numericPropertyPrefix, separators, defaultSeparator, forceObject) {
     if (Object(data) !== data || Array.isArray(data)) {
         return data;
     }
@@ -82,5 +84,13 @@ function unflatten(data, numericPropertyPrefix , separators, defaultSeparator, f
         } while (idx >= 0);
         cur[forceObject ? prop.toString() : prop] = data[p];
     }
-    return result[""];
+    return result[''];
+}
+
+/* istanbul ignore next */
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        flatten,
+        unflatten
+    };
 }
