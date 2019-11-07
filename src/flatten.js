@@ -67,6 +67,9 @@ function unflatten(data, numericPropertyPrefix, separators, defaultSeparator, fo
     if (Object(data) !== data || Array.isArray(data)) {
         return data;
     }
+    if (Object.keys(data).length < 1) {
+        return {};
+    }
     numericPropertyPrefix = !!numericPropertyPrefix ? numericPropertyPrefix : '~';
     defaultSeparator = !!defaultSeparator ? defaultSeparator : '.';
     separators = !!separators ? separators : [];
